@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %} Url list {% endblock %}
+
+{% block content %}
+<div class="row ">
+    <div class="col-md-8 mx-auto">
+        <h4 class="my-2">All urls</h4>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Country name</th>
+                <th scope="col">Url</th>
+                <th scope="col">New url</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in data %}
+            <tr>
+                <td>{{ item.country_name }}</td>
+                <td>{{ item.link_name }}</td>
+                <td>{{ item.new_url }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{% endblock content %}
