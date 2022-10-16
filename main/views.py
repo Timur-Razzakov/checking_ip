@@ -69,35 +69,6 @@ def check_url_view(request, url):
     return JsonResponse(data)
 
 
-"""2 вариант возвращает ошибку или переводит на нужную страницу"""
-
-#
-# def check_url_view(request, url):
-#     # получаем ip клиента
-#     geo = GeoIP2()
-#     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-#     if x_forwarded_for:
-#         ip = x_forwarded_for.split(',')[-1].strip()
-#     else:
-#         ip = request.META.get('REMOTE_ADDR')
-#
-#         # узнаём страну у полученного ip
-#     # geo_user = geo.country(ip)['country_code']
-#     geo_user = geo.country('95.214.211.44')['country_code']
-#     country_id = Country.objects.get(name=geo_user)
-#     get_need_url = Country_link.objects.filter(new_url=url, country_name=country_id.id
-#                                                ).values('link_name', 'country_name')
-#     if get_need_url.exists():
-#         for item in get_need_url:
-#             url = Url.objects.get(id=item['link_name'])
-#         return redirect(url.link)
-#     else:
-#         return render(request, '404.html')
-#
-#     # # ic(geo.country('72.14.207.99'))
-#     # ic(geo.country('95.214.211.44'))
-
-
 """Функция для показа всех ссылок и стран"""
 
 
@@ -107,6 +78,6 @@ def show_data_view(request):
     for item in data:
         ic(item['new_url'])
         if item['new_url'] in content['new_url']:
-            ic('asfdsdafsadfasdfadsf')
+            pass
         content['country_name'] = item
     return render(request, "get_all_urls.html", {'data': data})
