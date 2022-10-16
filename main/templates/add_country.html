@@ -9,10 +9,10 @@
     <div class="container px-4">
         <div class="row ">
             <div class="col-md-8 mx-auto">
-                <h4 class="my-2">Add new params</h4>
+                <h4 class="my-2">Add Country</h4>
                 <form method="POST" action="">{% csrf_token %}
                     <div class="form-group">
-                        {{ form.as_p }}
+                        {{ country_form.as_p }}
                     </div>
                     <button type="submit" class="btn btn-primary">Save</button>
                 </form>

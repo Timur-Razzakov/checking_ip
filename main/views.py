@@ -1,15 +1,11 @@
-#
-import json
 
-import pygeoip
-from django.core.exceptions import MultipleObjectsReturned
-from django.http import JsonResponse
-from django.shortcuts import render, redirect
-from ipware.ip import get_client_ip
-from .forms import Country_linkForm
-from .models import Country, Url, Country_link
-from icecream import ic
 from django.contrib.gis.geoip2 import GeoIP2
+from django.http import JsonResponse
+from django.shortcuts import render
+from icecream import ic
+
+from .forms import Country_linkForm, UrlForm, CountryForm
+from .models import Country, Url, Country_link
 
 
 def home_view(request):
@@ -47,12 +43,10 @@ def check_url_view(request, url):
         ip = request.META.get('REMOTE_ADDR')
 
         # узнаём страну у полученного ip
-    # geo_user = geo.country(ip)['country_code']
-    geo_user = geo.country('82.165.108.185')['country_code']
-    ic(geo_user)
+    geo_user = geo.country(ip)['country_code']
     try:
         country_id = Country.objects.get(name=geo_user)
-        get_need_url = Country_link.objects.filter(new_url=url, country_name=country_id.id
+        get_need_url = Country_link.objects.filter(new_url='143.47.237.139/' + url, country_name=country_id.id
                                                    ).values('link_name', 'country_name')
         if get_need_url.exists():
             for item in get_need_url:
@@ -81,3 +75,41 @@ def show_data_view(request):
             pass
         content['country_name'] = item
     return render(request, "get_all_urls.html", {'data': data})
+
+
+"""Функция для сохранения страны через форму"""
+
+
+def add_country_view(request):
+    country_form = CountryForm(request.POST or None)
+    if country_form.is_valid():
+        new_country = country_form.save()
+        data = country_form.cleaned_data
+        country = data['country_name'].split(',')
+        new_country.name = country[0].upper()
+        new_country.save()
+        for item in country[1::]:
+            save_country = Country.objects.create()
+            save_country.name = item.upper()
+            save_country.save()
+            return render(request, 'home.html')
+    return render(request, 'add_country.html', {'country_form': country_form})
+
+
+"""Функция для сохранения ссылки через форму"""
+
+
+def add_url_view(request):
+    url_form = UrlForm(request.POST or None)
+    if url_form.is_valid():
+        new_url = url_form.save()
+        data = url_form.cleaned_data
+        url = data['url_name'].split(',')
+        new_url.link = url[0]
+        new_url.save()
+        for item in url[1::]:
+            save_url = Url.objects.create()
+            save_url.link = item
+            save_url.save()
+        return render(request, 'home.html')
+    return render(request, 'add_url.html', {'url_form': url_form})

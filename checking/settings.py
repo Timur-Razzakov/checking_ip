@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'accounts',
     'main'
 ]
 
@@ -92,6 +92,7 @@ DATABASES = {
 # определение местоположения
 GEOIP_LOCATION_MODEL = 'geo.models.MyCustomLocation'
 
+AUTH_USER_MODEL = 'accounts.MyUser'
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 

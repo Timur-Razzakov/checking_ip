@@ -17,7 +17,7 @@ def unique_slug_generator(instance, new_url=None):
     Klass = instance.__class__
     qs_exists = Klass.objects.filter(new_url=new_url).exists()
     if qs_exists:
-        new_url = "{new_url}-{randstr}".format(
+        new_url = "143.47.237.139/{new_url}-{randstr}".format(
             new_url=new_url,
             randstr=random_string_generator(size=4)
         )

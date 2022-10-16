@@ -8,11 +8,14 @@
         <div class="container">
             <h1>Bootcamp project</h1>
             <p class="lead text-muted">Hello!!! </p>
+            {% if user.is_admin %}
             <p>
                 <a href="{% url 'add_params'%}" class="btn btn-primary my-2">added param</a>
-                <a href="{% url 'get_all_urls'%}" class="btn btn-primary my-2">Show all urls</a>
-
+                <a href="{% url 'add_country'%}" class="btn btn-primary my-2">added country</a>
+                <a href="{% url 'add_url'%}" class="btn btn-primary my-2">added urls</a>
+<!--                <a href="{% url 'get_all_urls'%}" class="btn btn-primary my-2">Show all urls</a>-->
             </p>
+            {% endif %}
         </div>
     </section>
 </main>
