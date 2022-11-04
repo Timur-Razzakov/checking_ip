@@ -4,7 +4,7 @@ from .models import Url, Country, Country_link
 
 
 class UrlAdmin(admin.ModelAdmin):
-    list_display = ('id', 'link')
+    list_display = ('id', 'link','description')
 
 
 class CountryAdmin(admin.ModelAdmin):
