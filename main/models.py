@@ -13,6 +13,7 @@ class Country(models.Model):
 
 
 class Url(models.Model):
+    description = models.TextField(verbose_name='description link',blank=True, null=True)
     link = models.CharField(verbose_name='link_name', max_length=255)
 
     def __str__(self):
