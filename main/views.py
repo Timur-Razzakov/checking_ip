@@ -1,9 +1,9 @@
 
 from django.contrib.gis.geoip2 import GeoIP2
 from django.http import JsonResponse
-from django.shortcuts import render
-from icecream import ic
-
+from django.shortcuts import render, redirect
+# from icecream import ic
+from django.contrib import messages
 from .forms import Country_linkForm, UrlForm, CountryForm
 from .models import Country, Url, Country_link
 
@@ -25,7 +25,8 @@ def add_params_view(request):
         for item in data['country']:
             new_collect.country_name.add(Country.objects.get(name=item))
         new_collect.save()
-        return render(request, 'home.html', {'new_collect': new_collect})
+        messages.success(request, 'Данные Добавлены!!')
+        return redirect('add_params')
     return render(request, 'add_params.html', {'form': form})
 
 
@@ -70,7 +71,6 @@ def show_data_view(request):
     data = Country_link.objects.all().values('link_name', 'country_name', 'new_url')
     content = {'new_url': 'maincountrynone'}
     for item in data:
-        ic(item['new_url'])
         if item['new_url'] in content['new_url']:
             pass
         content['country_name'] = item
@@ -92,7 +92,8 @@ def add_country_view(request):
             save_country = Country.objects.create()
             save_country.name = item.upper()
             save_country.save()
-            return render(request, 'home.html')
+        messages.success(request, 'Успешно Добавлены!!')
+        return redirect('add_country')
     return render(request, 'add_country.html', {'country_form': country_form})
 
 
@@ -111,5 +112,6 @@ def add_url_view(request):
             save_url = Url.objects.create()
             save_url.link = item
             save_url.save()
-        return render(request, 'home.html')
+        messages.success(request, 'Успешно Добавлены!!')
+        return redirect('add_url')
     return render(request, 'add_url.html', {'url_form': url_form})

@@ -1,8 +1,8 @@
-../.idea/
-../venv
+venv/
 *.env
 /__pycache__/
 *.pyc
 ../configurations
 templates_tag.txt
-old_update.html
+old_update.html!/.idea/
+staticfiles/

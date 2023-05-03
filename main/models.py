@@ -1,7 +1,7 @@
 from django.db import models
 from django.db.models.signals import post_save
 from django.urls import reverse
-
+from django_ckeditor_5.fields import CKEditor5Field
 from .utils import unique_slug_generator
 
 
@@ -13,6 +13,8 @@ class Country(models.Model):
 
 
 class Url(models.Model):
+    description = models.TextField(verbose_name='text', blank=True,
+                                 null=True)
     link = models.CharField(verbose_name='link_name', max_length=255)
 
     def __str__(self):

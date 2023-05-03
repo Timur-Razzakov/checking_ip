@@ -1,5 +1,4 @@
-from icecream import ic
-
+from ckeditor.widgets import CKEditorWidget
 from .models import Country_link, Country, Url
 from django import forms
 
@@ -31,10 +30,12 @@ class UrlForm(forms.ModelForm):
         widget=forms.TextInput(attrs={'class': 'form-control'}),
         label='Введите url, через запятую или вводите по одному',
     )
-
+    description = forms.CharField(widget=CKEditorWidget(),
+                                  required=False,
+                                  label='Место для коммента!!')  # max_file_size=1024 * 1024 * 5
     class Meta:
         model = Url
-        fields = ('url_name',)
+        fields = ('url_name','description')
 
     def clean(self, *args, **kwargs):
         get_urls = self.cleaned_data.get('url_name').split(',')
@@ -45,7 +46,7 @@ class UrlForm(forms.ModelForm):
                     raise forms.ValidationError('Такой Url уже существует!!')
                 else:
                     pass
-            return super(UrlForm, self).clean(*args, **kwargs)
+            return super(UrlForm, self).clean()
 
 
 class CountryForm(forms.ModelForm):

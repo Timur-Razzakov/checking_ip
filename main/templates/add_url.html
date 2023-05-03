@@ -13,6 +13,7 @@
                 <form method="POST" action="">{% csrf_token %}
                     <div class="form-group">
                         {{ url_form.as_p }}
+                        {{ url_form.media }}<!--  Для вывода "Ckeditor"  -->
                     </div>
                     <button type="submit" class="btn btn-primary">Save</button>
                 </form>

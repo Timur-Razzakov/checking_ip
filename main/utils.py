@@ -23,3 +23,6 @@ def unique_slug_generator(instance, new_url=None):
         )
         return unique_slug_generator(instance, new_url=new_url)
     return new_url
+
+
+

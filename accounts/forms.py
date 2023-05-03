@@ -4,7 +4,7 @@ from django import forms
 from django.contrib.auth import get_user_model, authenticate
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import User
-from icecream import ic
+
 
 
 User = get_user_model()
