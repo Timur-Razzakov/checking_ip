@@ -1,3 +1,4 @@
+import os
 
 from django.contrib.gis.geoip2 import GeoIP2
 from django.http import JsonResponse
@@ -22,6 +23,7 @@ def add_params_view(request):
         new_collect = form.save()
         data = form.cleaned_data
         new_collect.link_name = data['url']
+        new_collect.comment = data['comment']
         for item in data['country']:
             new_collect.country_name.add(Country.objects.get(name=item))
         new_collect.save()
@@ -47,7 +49,8 @@ def check_url_view(request, url):
     geo_user = geo.country(ip)['country_code']
     try:
         country_id = Country.objects.get(name=geo_user)
-        get_need_url = Country_link.objects.filter(new_url='143.47.237.139/' + url, country_name=country_id.id
+        get_need_url = Country_link.objects.filter(new_url=os.environ.get('IP_ADDRESS') + '/' + url,
+                                                   country_name=country_id.id
                                                    ).values('link_name', 'country_name')
         if get_need_url.exists():
             for item in get_need_url:

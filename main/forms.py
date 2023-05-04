@@ -19,10 +19,13 @@ class Country_linkForm(forms.ModelForm):
         widget=forms.Select(attrs={'class': 'form-control'}),
         label='Выберите ссылку '
     )
+    comment = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}),
+                              required=False,
+                              label='Место для коммента!!')  # max_file_size=1024 * 1024 * 5
 
     class Meta:
         model = Country_link
-        fields = ('country', 'url')
+        fields = ('country', 'url', 'comment')
 
 
 class UrlForm(forms.ModelForm):
@@ -30,12 +33,13 @@ class UrlForm(forms.ModelForm):
         widget=forms.TextInput(attrs={'class': 'form-control'}),
         label='Введите url, через запятую или вводите по одному',
     )
-    description = forms.CharField(widget=CKEditorWidget(),
+    description = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
                                   required=False,
                                   label='Место для коммента!!')  # max_file_size=1024 * 1024 * 5
+
     class Meta:
         model = Url
-        fields = ('url_name','description')
+        fields = ('url_name', 'description')
 
     def clean(self, *args, **kwargs):
         get_urls = self.cleaned_data.get('url_name').split(',')

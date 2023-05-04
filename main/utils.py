@@ -1,3 +1,4 @@
+import os
 import random
 import string
 
@@ -17,7 +18,8 @@ def unique_slug_generator(instance, new_url=None):
     Klass = instance.__class__
     qs_exists = Klass.objects.filter(new_url=new_url).exists()
     if qs_exists:
-        new_url = "143.47.237.139/{new_url}-{randstr}".format(
+        new_url = "{ip_address}/{new_url}-{randstr}".format(
+            ip_address=os.environ.get('IP_ADDRESS'),
             new_url=new_url,
             randstr=random_string_generator(size=4)
         )

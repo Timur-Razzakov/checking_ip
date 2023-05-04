@@ -13,16 +13,12 @@ class Country(models.Model):
 
 
 class Url(models.Model):
-<<<<<<< HEAD
     description = models.TextField(verbose_name='text', blank=True,
-                                 null=True)
-=======
-    description = models.TextField(verbose_name='description link',blank=True, null=True)
->>>>>>> b3a50ff234c8b77c8503b6be93f76e5c250ebc61
+                                   null=True)
     link = models.CharField(verbose_name='link_name', max_length=255)
 
     def __str__(self):
-        return self.link
+        return "%s" % self.link
 
 
 class Country_link(models.Model):
@@ -30,7 +26,8 @@ class Country_link(models.Model):
                                   blank=True, null=True)
     country_name = models.ManyToManyField(Country)
     new_url = models.CharField(verbose_name='new_link', max_length=255)
-
+    comment = models.TextField(verbose_name='comment', blank=True,
+                                   null=True)
     def __str__(self):
         return self.new_url
 
