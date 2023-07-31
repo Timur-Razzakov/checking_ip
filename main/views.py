@@ -3,7 +3,7 @@ import os
 from django.contrib.gis.geoip2 import GeoIP2
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
-# from icecream import ic
+from django.contrib.auth.decorators import login_required  # для запрета если не вошёл в систему
 from django.contrib import messages
 from .forms import Country_linkForm, UrlForm, CountryForm
 from .models import Country, Url, Country_link
@@ -15,7 +15,7 @@ def home_view(request):
 
 """Добавляем  новые ссылки и для них разрешённые города"""
 
-
+@login_required
 def add_params_view(request):
     global get_country
     form = Country_linkForm(request.POST or None)
@@ -34,7 +34,7 @@ def add_params_view(request):
 
 """Получаем user_ip"""
 
-
+@login_required
 def check_url_view(request, url):
     # получаем ip клиента
     data = {}
@@ -69,7 +69,7 @@ def check_url_view(request, url):
 
 """Функция для показа всех ссылок и стран"""
 
-
+@login_required
 def show_data_view(request):
     data = Country_link.objects.all().values('link_name', 'country_name', 'new_url')
     content = {'new_url': 'maincountrynone'}
@@ -82,7 +82,7 @@ def show_data_view(request):
 
 """Функция для сохранения страны через форму"""
 
-
+@login_required
 def add_country_view(request):
     country_form = CountryForm(request.POST or None)
     if country_form.is_valid():
@@ -102,7 +102,7 @@ def add_country_view(request):
 
 """Функция для сохранения ссылки через форму"""
 
-
+@login_required
 def add_url_view(request):
     url_form = UrlForm(request.POST or None)
     if url_form.is_valid():
