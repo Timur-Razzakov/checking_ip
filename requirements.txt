@@ -3,7 +3,6 @@ aiosignal==1.2.0
 asgiref==3.5.2
 async-timeout==4.0.2
 attrs==22.1.0
-backports.zoneinfo==0.2.1
 certifi==2022.9.24
 charset-normalizer==2.1.1
 Django==4.1.2
@@ -17,9 +16,11 @@ django-ipware==4.0.2
 django-js-asset==2.0.0
 frozenlist==1.3.1
 geoip2==2.9.0
+gunicorn==21.2.0
 idna==3.4
 maxminddb==1.5.4
 multidict==6.0.2
+packaging==23.1
 Pillow==9.4.0
 postgres==4.0
 psycopg2-binary==2.9.4
