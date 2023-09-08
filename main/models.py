@@ -23,11 +23,12 @@ class Url(models.Model):
 
 class Country_link(models.Model):
     link_name = models.ForeignKey(Url, verbose_name='url_id', on_delete=models.CASCADE,
-                                  blank=True, null=True)
-    country_name = models.ManyToManyField(Country)
-    new_url = models.CharField(verbose_name='new_link', max_length=255)
+                                  blank=True, null=True, related_name="link_names")
+    country_name = models.ManyToManyField(Country, related_name="country_names")
+    new_url = models.CharField(verbose_name='new_link', max_length=255, unique=True)
     comment = models.TextField(verbose_name='comment', blank=True,
-                                   null=True)
+                               null=True)
+
     def __str__(self):
         return self.new_url
 

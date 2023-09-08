@@ -11,16 +11,16 @@ def random_string_generator(size=10, chars=string.ascii_lowercase + string.digit
 
 def unique_slug_generator(instance, new_url=None):
     if new_url is not None:
-        new_url = new_url
-    else:
-        new_url = slugify(instance.country_name)
+        return new_url
 
+    new_url = slugify(instance.country_name)
     Klass = instance.__class__
-    qs_exists = Klass.objects.filter(new_url=new_url).exists()
-    if qs_exists:
-        new_url = "{ip_address}/{new_url}-{randstr}".format(
+
+    while Klass.objects.filter(new_url=new_url).exists():
+        # Если new_url уже существует, генерируем новый
+        new_url = "{ip_address}/{randtext}-{randstr}".format(
             ip_address=os.environ.get('IP_ADDRESS'),
-            new_url=new_url,
+            randtext=random_string_generator(size=6),
             randstr=random_string_generator(size=4)
         )
         return unique_slug_generator(instance, new_url=new_url)

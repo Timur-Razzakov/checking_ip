@@ -8,5 +8,5 @@ urlpatterns = [
     path('add_country/', add_country_view, name='add_country'),
     path('add_url/', add_url_view, name='add_url'),
     path('get_all_urls/', show_data_view, name='get_all_urls'),
-    path('<str:url>/', check_url_view, name='myurl')
+    path('get/', check_url_view, name='myurl')
 ]
