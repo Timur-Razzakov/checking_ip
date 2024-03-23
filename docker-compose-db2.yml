@@ -4,12 +4,8 @@ services:
   db2:
     image: postgres:15
     restart: always
-    environment:
-      POSTGRES_DB: link_db_2
-      POSTGRES_USER: link_db_2
-      POSTGRES_PASSWORD: link_db_2
-      POSTGRES_HOST: db2
-      POSTGRES_PORT: 5432
+    env_file:
+      - .env
     volumes:
       - data2:/var/lib/postgresql/data
   app2:
