@@ -16,22 +16,6 @@ services:
     command: bash -c "python manage.py migrate  && python manage.py runserver 0.0.0.0:8000"
     depends_on:
       - db
-  db2:
-    image: postgres
-    restart: always
-    env_file:
-      - .env.db2  # Указываем другой файл с переменными окружения для второй БД
-    volumes:
-      - data2:/var/lib/postgresql/data  # Используем другой том для данных второй БД
-  app2:
-    build: ./
-    restart: always
-    ports:
-      - "81:8000"  # Изменим порт, чтобы избежать конфликта
-    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
-    depends_on:
-      - db2
 volumes:
   data:
-  data2:
 
