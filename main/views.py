@@ -2,7 +2,7 @@ import os
 
 import requests
 from django.contrib.gis.geoip2 import GeoIP2
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required  # для запрета если не вошёл в систему
 from django.contrib import messages
@@ -55,6 +55,33 @@ def client_data(client_ip):
     return response
 
 
+# def check_url_view(request, url):
+#     result = {}
+#     geo = GeoIP2()
+#     ip = get_ip(request)
+#     result['about_user'] = client_data(ip).json()
+#     # узнаём страну у полученного ip
+#     geo_user = geo.country(ip)['country_code']
+#     try:
+#         country_id = Country.objects.get(name=geo_user)
+#         get_need_url = Country_link.objects.filter(new_url=os.environ.get('IP_ADDRESS') + '/' + url,
+#                                                    country_name=country_id.id
+#                                                    ).values('link_name', 'country_name')
+#         if get_need_url.exists():
+#             for item in get_need_url:
+#                 country = Country.objects.get(id=item['country_name'])
+#                 url = Url.objects.get(id=item['link_name'])
+#                 result['country'] = country.name
+#                 result['url'] = url.link
+#         else:
+#             result['url'] = None
+#             result['country'] = None
+#     except Exception:
+#         result['url'] = None
+#         result['country'] = None
+#     return JsonResponse(result)
+#
+"""Новая версия с использование редиректа по указанным ссылкам"""
 def check_url_view(request, url):
     result = {}
     geo = GeoIP2()
@@ -73,13 +100,15 @@ def check_url_view(request, url):
                 url = Url.objects.get(id=item['link_name'])
                 result['country'] = country.name
                 result['url'] = url.link
+                return HttpResponseRedirect(result['url'])
         else:
-            result['url'] = None
-            result['country'] = None
-    except Exception:
-        result['url'] = None
-        result['country'] = None
-    return JsonResponse(result)
+            return HttpResponseRedirect(
+                'https://doc-hosting.flycricket.io/giga-b-privacy-policy/e6c0c55a-98ec-42f2-9954'
+                '-d858f42013dd/privacy')
+    except Exception as e:
+        return HttpResponseRedirect(
+            'https://doc-hosting.flycricket.io/giga-b-privacy-policy/e6c0c55a-98ec-42f2-9954-d858f42013dd'
+            '/privacy')
 
 
 """Функция для показа всех ссылок и стран"""
