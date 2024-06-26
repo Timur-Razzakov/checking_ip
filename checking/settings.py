@@ -32,7 +32,10 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = os.environ.get('DEBUG')
 
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+additional_hosts = ["giagaadvancetrade.ru"]
 
+# Добавляем дополнительные хосты к ALLOWED_HOSTS
+ALLOWED_HOSTS.extend(additional_hosts)
 
 # Application definition
 
